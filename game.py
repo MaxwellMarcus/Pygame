@@ -8,19 +8,26 @@ win = pygame.display.set_mode((screen_width,screen_height))
 
 pygame.display.set_caption('Game')
 
-x = 50
-y = 300
-width = 40
-height = 60
-vel = 5
+class Player:
+    def __init__(self,x,y,width,height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.vel = 5
 
-is_jump = False
-jump_vel = 5
-highest_jump_vel = jump_vel
+        self.is_jump = False
+        self.jump_vel = 5
+        self.highest_jump_vel = self.jump_vel
 
-left = False
-right = False
-animation_frame = 0
+        self.right = False
+        self.left = False
+        self.animation_frame = 0
+
+
+
+player = Player(300,410,64,64)
+
 
 run = True
 while run:
@@ -32,28 +39,28 @@ while run:
 
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT] and x > vel:
-        x -= vel
-    if keys[pygame.K_RIGHT] and x < 500-vel-width:
-        x += vel
-    if not is_jump:
+    if keys[pygame.K_LEFT] and player.x > player.vel:
+        player.x -= player.vel
+    if keys[pygame.K_RIGHT] and player.x < 500-player.vel-player.width:
+        player.x += player.vel
+    if not player.is_jump:
         if keys[pygame.K_SPACE]:
-            is_jump = True
+            player.is_jump = True
     else:
-        if jump_vel >= -highest_jump_vel:
+        if player.jump_vel >= -player.highest_jump_vel:
             down = 1
-            if jump_vel < 0:
+            if player.jump_vel < 0:
                 down = -1
 
-            y -= (jump_vel**2/2)*down
-            jump_vel -= 1
+            player.y -= (player.jump_vel**2/2)*down
+            player.jump_vel -= 1
         else:
-            is_jump = False
-            jump_vel = highest_jump_vel
+            player.is_jump = False
+            player.jump_vel = player.highest_jump_vel
 
 
     win.fill((0,0,0))
-    pygame.draw.rect(win, (255,0,0),(x,y,width,height))
+    pygame.draw.rect(win, (255,0,0),(player.x,player.y,player.width,player.height))
     pygame.display.update()
 
 pygame.quit()
