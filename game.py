@@ -40,9 +40,13 @@ class Player:
         if self.animation_frame > 20:
             self.animation_frame = 0
         if self.direction == 1:
-            win.blit(self.right[self.animation_frame//3], (self.x,self.y))
+            size = self.right[self.animation_frame//3].get_rect().size
+            y = size[1]
+            win.blit(self.right[self.animation_frame//3], (self.x,self.y-y))
         if self.direction == -1:
-            win.blit(self.left[self.animation_frame//3], (self.x,self.y))
+            size = self.right[self.animation_frame//3].get_rect().size
+            y = size[1]
+            win.blit(self.left[self.animation_frame//3], (self.x,self.y+self.height-y))
 
 
 class Projectile:
@@ -58,7 +62,7 @@ class Projectile:
         pygame.draw.circle(win,self.color,(self.x,self.y),self.radius,0)
 
 
-player = Player(300,410,25,50)
+player = Player(300,screen_height-50,25,50)
 bullets = []
 
 run = True
